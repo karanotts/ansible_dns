@@ -22,29 +22,38 @@
 
 - name: Modify named.conf.options file
   template:
-    src: etc_named.conf.options.j2
+    src: named.conf.options.j2
+    dest: /etc/bind/named.conf.options
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"
+    mode: 0755
+  notify: restart bind9
 
 - name: Modify named.conf.local file
   template:
-    src: etc_named.conf.local.j2
+    src: named.conf.local.j2
+    dest: /etc/bind/named.conf.local
+    owner: "{{ bind_owner }}"
+    group: "{{ bind_group }}"
+  notify: restart bind9 
 
 - name: Create forward zone file
   template:
     src: fwd_zone.j2
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"
-    dest: "{{ zones_dir }}/
+    dest: /etc/bind/zones/db.mylabserver.com
     mode: 0755
-    
+  notify: restart bind9
 
 - name: Create reverse zone file
   template:
     src: rev_zone.j2
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"
-    dest: "{{ zones_dir }}/
+    dest: /etc/bind/zones/db.172.31
     mode: 0755
+  notify: restart bind9
  
-- name: Check name zones
+- name: Allow BIND9 in firewall
+  command: ufw allow Bind9  
