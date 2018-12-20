@@ -1,0 +1,50 @@
+- name: Install BIND9
+  apt:
+    pkg: ['bind9', 'bind9utils', 'bind9-doc'] 
+    state: latest
+  when: "ansible_os_family == 'Debian'"  
+  notify: restart bind9
+  
+- name: Install BIND
+  yum: 
+    pkg: ['bind', 'bind-utils']
+    state: latest
+  when: "ansible_os_family == 'RedHat'"
+  notify: restart named
+
+- name: Create zones dir
+  file:
+    path: /etc/bind/zones
+    state: directory
+    owner: "{{ bind_owner }}"
+    group: "{{ bind_group }}"
+    mode: 0755
+
+- name: Modify named.conf.options file
+  template:
+    src: etc_named.conf.options.j2
+    owner: "{{ bind_owner }}"
+    group: "{{ bind_group }}"
+
+- name: Modify named.conf.local file
+  template:
+    src: etc_named.conf.local.j2
+
+- name: Create forward zone file
+  template:
+    src: fwd_zone.j2
+    owner: "{{ bind_owner }}"
+    group: "{{ bind_group }}"
+    dest: "{{ zones_dir }}/
+    mode: 0755
+    
+
+- name: Create reverse zone file
+  template:
+    src: rev_zone.j2
+    owner: "{{ bind_owner }}"
+    group: "{{ bind_group }}"
+    dest: "{{ zones_dir }}/
+    mode: 0755
+ 
+- name: Check name zones
