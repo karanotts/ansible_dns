@@ -1,0 +1,23 @@
+---
+- name: start bind9
+  systemd:
+    name: bind9
+    state: started
+    enabled: true
+
+- name: stop bind9
+  systemd:
+    name: bind9
+    state: stopped
+
+- name: restart bind9
+  systemd:
+    name: bind9
+    state: restarted
+    daemon_reload: yes
+
+- name: check config
+  command: "named-checkconf"
+
+- named: check zones
+  command: "named-checkzone"

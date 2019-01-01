@@ -1,0 +1,22 @@
+---
+- name: Create forward zone file
+  template:
+    src: fwd_zone.j2
+    owner: "{{ bind_owner }}"
+    group: "{{ bind_group }}"
+    dest: "{{ zones_dir }}/db.mylabserver.com"
+    mode: 0755
+    validate: 'named-checkzone -d db.mylabserver.com %s'
+  tags: fwd-zone
+  notify: restart bind9
+
+- name: Create reverse zone file
+  template:
+    src: rev_zone.j2
+    owner: "{{ bind_owner }}"
+    group: "{{ bind_group }}"
+    dest: "{{ zones_dir }}/db.172.31"
+    mode: 0755
+    validate: 'named-checkzone -d db.172.31 %s'
+  tags: rev-zone
+  notify: restart bind9

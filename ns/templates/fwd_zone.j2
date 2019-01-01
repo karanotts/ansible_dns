@@ -1,0 +1,17 @@
+$TTL    604800
+@       IN      SOA     mylabserver.com. root.localhost. (
+                  3     ; Serial
+             604800     ; Refresh
+              86400     ; Retry
+            2419200     ; Expire
+             604800 )   ; Negative Cache TTL
+;
+; name servers - NS records
+     IN      NS      andynottingham2c.mylabserver.com.
+
+; name servers - A records
+andynottingham2c.mylabserver.com.          IN      A       172.31.22.124
+
+; 172.31.0.0/16 - A records
+andynottingham3c.mylabserver.com.          IN      A       172.31.27.172
+andynottingham4c.mylabserver.com.          IN      A       172.31.29.20

@@ -1,0 +1,8 @@
+---
+- include: bind.yml
+  tags:
+    - bind
+
+- include: nsupdate.yml
+  tags:
+    - nsupdate

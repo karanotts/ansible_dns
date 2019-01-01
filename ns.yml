@@ -1,0 +1,13 @@
+--- # MASTER FOR NS
+- hosts: ns
+  user: ansible
+  become: true
+  connection: ssh
+  pre_tasks:
+  - name: Play start
+    raw: date > /home/ansible/startnsrole.log
+  roles:
+    - ns
+  post_tasks:
+  - name: Play end
+    raw: date > /home/ansible/stoprole.log

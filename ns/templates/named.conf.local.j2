@@ -1,0 +1,17 @@
+{% for domain_zone in domain_zones %}
+
+zone {{ domain_zones.name }} {
+    type master;
+    file "{{ zones_dir }}/db.{{ domain_zones.name }}";
+    allow-transfer { localhost; };
+    allow-query { any };
+};
+
+zone "{{ domain_zones.reverse }}.in-addr.arpa" {
+    type master;
+    file "{{ zones_dir }}/db.{{ domain_zones.reverse }}";
+    allow-transfer {localhost; };
+    allow-
+};
+
+{% endfor %}
