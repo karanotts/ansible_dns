@@ -5,40 +5,5 @@
     state: latest
   notify: start bind9
 
-- name: Create zones dir
-  file:
-    path: "{{ zones_dir }}"
-    state: directory
-    owner: "{{ bind_owner }}"
-    group: "{{ bind_group }}"
-    mode: 0755
-
-- name: Modify named.conf.options file
-  template:
-    src: named.conf.options.j2
-    dest: /etc/bind/named.conf.options
-    owner: "{{ bind_owner }}"
-    group: "{{ bind_group }}"
-    mode: 0755
-  notify: restart bind9
-
-- name: Modify named.conf.local file
-  template:
-    src: named.conf.local.j2
-    dest: /etc/bind/named.conf.local
-    owner: "{{ bind_owner }}"
-    group: "{{ bind_group }}"
-    mode: 0755
-  notify: restart bind9
-
-- name: Set BIND to IPV4
-  copy:
-    src: ns/files/etc/default/bind9
-    dest: /etc/default/bind9
-    owner: "root"
-    group: "root"
-  become: yes
-  notify: restart bind9
-
 - name: Allow BIND9 in firewall
   command: ufw allow Bind9

@@ -1,22 +1,34 @@
----
-- name: Create forward zone file
-  template:
-    src: fwd_zone.j2
+- name: Create zones dir
+  file:
+    path: "{{ zones_dir }}"
+    state: directory
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"
-    dest: "{{ zones_dir }}/db.mylabserver.com"
     mode: 0755
-    validate: 'named-checkzone -d db.mylabserver.com %s'
-  tags: fwd-zone
+
+- name: Modify named.conf.options file
+  template:
+    src: named.conf.options.j2
+    dest: /etc/bind/named.conf.options
+    owner: "{{ bind_owner }}"
+    group: "{{ bind_group }}"
+    mode: 0644
   notify: restart bind9
 
-- name: Create reverse zone file
+- name: Modify named.conf.local file
   template:
-    src: rev_zone.j2
+    src: named.conf.local.j2
+    dest: /etc/bind/named.conf.local
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"
-    dest: "{{ zones_dir }}/db.172.31"
-    mode: 0755
-    validate: 'named-checkzone -d db.172.31 %s'
-  tags: rev-zone
+    mode: 0644
+  notify: restart bind9
+
+- name: Set BIND to IPV4
+  copy:
+    src: ns/files/etc/default/bind9
+    dest: /etc/default/bind9
+    owner: "root"
+    group: "root"
+  become: yes
   notify: restart bind9

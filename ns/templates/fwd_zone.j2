@@ -1,10 +1,12 @@
-$TTL    604800
+; {{ ansible_managed }} 
+
+$TTL    {{ bind_zone_ttl }}
 @       IN      SOA     mylabserver.com. root.localhost. (
-       {{ serial }}     ; Serial
-             604800     ; Refresh
-              86400     ; Retry
-            2419200     ; Expire
-             604800 )   ; Negative Cache TTL
+      {{ bind_zone_serial }}     ; Serial
+      {{ bind_zone_refresh }}    ; Refresh
+      {{ bind_zone_retry }}      ; Retry
+      {{ bind_zone_expire }}     ; Expire
+      {{ bind_zone_min_ttl }} )  ; Negative Cache TTL
 ;
 ; name servers - NS records
      IN      NS      andynottingham2c.mylabserver.com.
@@ -15,3 +17,4 @@ andynottingham2c.mylabserver.com.          IN      A       172.31.22.124
 ; 172.31.0.0/16 - A records
 andynottingham3c.mylabserver.com.          IN      A       172.31.27.172
 andynottingham4c.mylabserver.com.          IN      A       172.31.29.20
+

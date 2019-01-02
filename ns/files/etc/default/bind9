@@ -1,2 +1,4 @@
+# {{ ansible_managed  }} 
+
 # startup options for the server
 OPTIONS="-4 -u bind"

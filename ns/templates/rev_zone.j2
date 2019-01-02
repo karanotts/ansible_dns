@@ -1,10 +1,11 @@
-$TTL    604800
+; {{ ansible_managed }}
+$TTL    {{ bind_zone_ttl }}
 @       IN      SOA     andynottingham2c.mylabserver.com. root.localhost. (
-      3         ; Serial
-      604800    ; Refresh
-      86400     ; Retry
-      2419200   ; Expire
-      604800 )  ; Negative Cache TTL
+      {{ bind_zone_serial }}     ; Serial
+      {{ bind_zone_refresh }}    ; Refresh
+      {{ bind_zone_retry }}      ; Retry
+      {{ bind_zone_expire }}     ; Expire
+      {{ bind_zone_min_ttl }} )  ; Negative Cache TTL
 
 ; name servers
       IN      NS      andynottingham2c.mylabserver.com.
@@ -14,3 +15,4 @@ $TTL    604800
 22.124   IN      PTR     andynottingham2c.mylabserver.com.    ; 172.31.22.124
 27.172   IN      PTR     andynottingham3c.mylabserver.com.    ; 172.31.27.172
 29.20    IN      PTR     andynottingham4c.mylabserver.com.    ; 172.31.29.20
+
