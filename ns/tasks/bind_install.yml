@@ -1,10 +1,8 @@
 ---
 - name: Install BIND9
   apt:
-    pkg: {{ item }}
+    pkg: "{{ bind_packages }}"
     state: latest
-    with_items: "{{ bind_packages }}"
-  when: "ansible_os_family == 'Debian'"
   notify: start bind9
 
 - name: Create zones dir
@@ -30,6 +28,16 @@
     dest: /etc/bind/named.conf.local
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"
+    mode: 0755
+  notify: restart bind9
+
+- name: Set BIND to IPV4
+  copy:
+    src: ns/files/etc/default/bind9
+    dest: /etc/default/bind9
+    owner: "root"
+    group: "root"
+  become: yes
   notify: restart bind9
 
 - name: Allow BIND9 in firewall

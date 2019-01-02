@@ -1,6 +1,0 @@
-copyright_msg: CP2015
-centos_bind: bind
-debian_bind: bind9
-bind_owner: bind
-bind_group: bind
-zones_dir: /etc/bind/zones

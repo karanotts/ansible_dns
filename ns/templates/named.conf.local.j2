@@ -1,17 +1,17 @@
 {% for domain_zone in domain_zones %}
 
-zone {{ domain_zones.name }} {
+zone {{ domain_zone.name }} {
     type master;
-    file "{{ zones_dir }}/db.{{ domain_zones.name }}";
+    file "{{ zones_dir }}/db.{{ domain_zone.name }}";
     allow-transfer { localhost; };
     allow-query { any };
 };
 
-zone "{{ domain_zones.reverse }}.in-addr.arpa" {
+zone "{{ domain_zone.reverse }}.in-addr.arpa" {
     type master;
-    file "{{ zones_dir }}/db.{{ domain_zones.reverse }}";
-    allow-transfer {localhost; };
-    allow-
+    file "{{ zones_dir }}/db.{{ domain_zone.reverse }}";
+    allow-transfer { localhost; };
+    allow-query { any };
 };
 
 {% endfor %}

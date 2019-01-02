@@ -1,2 +1,6 @@
 ---
 acls: []
+domain_zones:
+  - {name: "mylabserver.com", networks: "172.31", reverse: "31.172"}
+serial: "{{
+        ansible_date_time.epoch | int +1 }}"
