@@ -1,0 +1,6 @@
+bind_azure_auto_generated_records:
+  - {name: 'betaDemo01', ttl: 300, type: 'A', dest: '10.0.0.11'}
+  - {name: 'betaDemo02', ttl: 300, type: 'A', dest: '10.0.0.12'}
+  - {name: 'betaDemo03', ttl: 300, type: 'A', dest: '10.0.0.13'}
+  - {name: 'betaDemo04', ttl: 300, type: 'A', dest: '10.0.0.14'}
+  - {name: 'betaDemo05', ttl: 300, type: 'A', dest: '10.0.0.15'}

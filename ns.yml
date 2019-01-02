@@ -3,6 +3,13 @@
   user: ansible
   become: true
   connection: ssh
+  vars:
+    bind_azure_auto_generated_records:
+      - {name: 'betaDemo01', ttl: 300, type: 'A', dest: '172.31.111'}
+      - {name: 'betaDemo02', ttl: 300, type: 'A', dest: '172.31.112'}
+      - {name: 'betaDemo03', ttl: 300, type: 'A', dest: '172.31.113'}
+      - {name: 'betaDemo04', ttl: 300, type: 'A', dest: '172.31.114'}
+      - {name: 'betaDemo05', ttl: 300, type: 'A', dest: '172.31.115'}
   pre_tasks:
   - name: Play start
     raw: date > /home/ansible/startnsrole.log

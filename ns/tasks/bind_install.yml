@@ -1,9 +1,18 @@
 ---
-- name: Install BIND9
+- name: Install BIND9 + utils
   apt:
     pkg: "{{ bind_packages }}"
     state: latest
   notify: start bind9
+
+- name: Install pip
+  apt:
+    pkg: python-pip
+    state: latest
+
+- name: Install dnspython
+  pip:
+    name: dnspython
 
 - name: Allow BIND9 in firewall
   command: ufw allow Bind9
