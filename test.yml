@@ -5,6 +5,10 @@
   connection: ssh
   vars:
     domain_zones:
-      - {name: "mylabserver.com", networks: "172.31", reverse: "31.172"}
+      - {
+	  name: "mylabserver.com",
+	  networks: "172.31",
+	  reverse: "31.172"
+	  type: "master"}
   roles:
     - ns

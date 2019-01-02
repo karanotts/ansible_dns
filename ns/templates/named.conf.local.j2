@@ -1,31 +1,32 @@
+# {{ ansible_managed }}
 {% for domain_zone in domain_zones %}
 
 zone {{ domain_zone.name }} {
-    {% if domain_zone.type == "master" %}
-    type master;
-    {% elif domain_zone.type == "slave" %}
-    type slave;
+  {% if domain_zone.type == "master" %} 
+  type master;
+  {% elif domain_zone.type == "slave" %} 
+  type slave;
     masters {
-      {{ master }};
+      {{ domain_zone.master }};
     };
-    {% endif %}
-    file "{{ zones_dir }}/db.{{ domain_zone.name }}";
-    allow-transfer { localhost; };
-    allow-query { any };
+  {% endif %}
+  file "{{ zones_dir }}/db.{{ domain_zone.name }}";
+  allow-transfer { localhost; };
+  allow-query { any };
 };
 
 zone "{{ domain_zone.reverse }}.in-addr.arpa" {
-    {% if domain_zone.type == "master" %}
-    type master;
-    {% elif domain_zone.type == "slave" %}
-    type slave;
+  {% if domain_zone.type == "master" %}
+  type master;
+  {% elif domain_zone.type == "slave" %}
+  type slave;
     masters {
-      {{ master }};
+      {{ domain_zone.master }};
     };
-    {% endif %}
-    file "{{ zones_dir }}/db.{{ domain_zone.reverse }}";
-    allow-transfer { localhost; };
-    allow-query { any };
+  {% endif %}
+  file "{{ zones_dir }}/db.{{ domain_zone.reverse }}";
+  allow-transfer { localhost; };
+  allow-query { any };
 };
 
 {% endfor %}

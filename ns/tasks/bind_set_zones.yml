@@ -4,9 +4,10 @@
     src: fwd_zone.j2
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"
-    dest: "{{ zones_dir }}/db.mylabserver.com"
+    dest: "{{ zones_dir }}/db.{{ item.name }}"
     mode: 0755
     validate: 'named-checkzone -d db.mylabserver.com %s'
+  with_items: "{{ domain_zones }}"
   tags: fwd-zone
   notify: restart bind9
 
@@ -15,8 +16,9 @@
     src: rev_zone.j2
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"
-    dest: "{{ zones_dir }}/db.172.31"
+    dest: "{{ zones_dir }}/db.{{ item.reverse }}"
     mode: 0755
     validate: 'named-checkzone -d db.172.31 %s'
+  with_items: "{{ domain_zones }}"
   tags: rev-zone
   notify: restart bind9
