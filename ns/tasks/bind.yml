@@ -2,4 +2,3 @@
 - include: "bind_install.yml"
 - include: "bind_configure.yml"
 - include: "bind_set_zones.yml"
-- include: "bind_apparmor.yml"

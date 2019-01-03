@@ -1,5 +1,5 @@
 acl "trusted" {
-  {% for host in trusted_hosts %}
+  {% for host in bind_trusted_hosts %}
   {{ host.ip }};
   {% endfor %}
 };
@@ -15,13 +15,13 @@ options {
         // Uncomment the following block, and insert the addresses replacing
         // the all-0's placeholder.
 
-        recursion yes; 
+        recursion yes;
 
-        allow-recursion { trusted; }; 
+        allow-recursion { trusted; };
 
-        #; listen-on { 10.128.10.11; }; 
+        #; listen-on { 10.128.10.11; };
 
-        allow-transfer { trusted; }; 
+        allow-transfer { trusted; };
 
         forwarders {
                 8.8.8.8;

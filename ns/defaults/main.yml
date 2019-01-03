@@ -1,20 +1,10 @@
 ---
-acls: []
-domain_zones:
-  - {
-      name: "mylabserver.com",
-      networks: "172.31",
-      reverse: "31.172",
-      type: "master",
-      slaves: [],
-      forwarders: [],
-    }
-trusted_hosts: "{{ whitelisted }}"
 
+bind_trusted_hosts: "{{ whitelisted }}"
 bind_zone_dir: "/etc/bind/zones/"
 bind_zone_ttl: "604800"
 bind_zone_refresh: "604800"
 bind_zone_retry: "86400"
 bind_zone_expire: "2419200"
-bind_zone_min_ttl: "604800"
+bind_zone_neg_ttl: "604800"
 bind_zone_serial: "{{ ansible_date_time.epoch | int +1 }}"

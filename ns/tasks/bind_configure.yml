@@ -6,10 +6,21 @@
     group: "{{ bind_group }}"
     mode: 0755
 
+- name: Create keys dir
+  file:
+    path: "{{ bind_zone_dir }}/keys"
+    state: directory
+    owner: "{{ bind_owner }}"
+    group: "{{ bind_group }}"
+    mode: 0755
+
+- name: Create DNSSEC keys
+  import_tasks: "bind_dnskeys.yml"
+
 - name: Modify named.conf.options file
   template:
     src: named.conf.options.j2
-    dest: /etc/bind/named.conf.options
+    dest: "{{ bind_dir }}/named.conf.options"
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"
     mode: 0644
@@ -18,7 +29,7 @@
 - name: Modify named.conf.local file
   template:
     src: named.conf.local.j2
-    dest: /etc/bind/named.conf.local
+    dest: "{{ bind_dir }}/named.conf.local"
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"
     mode: 0644
@@ -32,3 +43,6 @@
     group: "root"
   become: yes
   notify: restart bind9
+
+- name: Allow bind to write to zones dir
+  import_tasks: "bind_apparmor.yml"

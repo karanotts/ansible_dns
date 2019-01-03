@@ -5,7 +5,7 @@ $TTL    {{ bind_zone_ttl }}
       {{ bind_zone_refresh }}    ; Refresh
       {{ bind_zone_retry }}      ; Retry
       {{ bind_zone_expire }}     ; Expire
-      {{ bind_zone_min_ttl }} )  ; Negative Cache TTL
+      {{ bind_zone_neg_ttl }} )  ; Negative Cache TTL
 
 ; name servers
       IN      NS      andynottingham2c.mylabserver.com.
@@ -15,4 +15,3 @@ $TTL    {{ bind_zone_ttl }}
 22.124   IN      PTR     andynottingham2c.mylabserver.com.    ; 172.31.22.124
 27.172   IN      PTR     andynottingham3c.mylabserver.com.    ; 172.31.27.172
 29.20    IN      PTR     andynottingham4c.mylabserver.com.    ; 172.31.29.20
-

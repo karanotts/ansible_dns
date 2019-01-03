@@ -1,8 +1,8 @@
 ---
 debian_bind: bind9
+bind_dir: "/etc/bind"
 bind_owner: bind
 bind_group: bind
-zones_dir: /etc/bind/zones
 bind_packages:
   - bind9
   - bind9utils

@@ -1,0 +1,9 @@
+
+{% for zone.name in bind_domain_zones %}
+{% if item.item.name == zone.name %}
+key "{{ zone.name }}" {
+   algorithm hmac-md5;
+	 secret "{{ item.stdout }}";
+};
+{% endif %}
+{% endfor %}

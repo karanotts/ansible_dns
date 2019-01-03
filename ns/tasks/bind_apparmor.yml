@@ -1,7 +1,7 @@
 - name: Allow bind to write to zones dir
   lineinfile:
     dest=/etc/apparmor.d/usr.sbin.named
-    line="  {{ item }} rw,"
+    line="  {{ item }} ,"
     insertbefore='}'
   with_items:
     - "{{ bind_zone_dir }}** lrw"

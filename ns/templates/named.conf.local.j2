@@ -1,33 +1,28 @@
-key "{{ dns_key_name }}" {
-  algorithm hmac-md5;
-  secret "{{ dns_key_secret }}";
-};
+// {{ ansible_managed }}
 
-{% for domain_zone in domain_zones %}
+{% for item in bind_domain_zones %}
 
-zone {{ domain_zone.name }} {
-{% if domain_zone.type == "master" %} 
+zone {{ item.name }} {
+{% if item.type == "master" %}
   type master;
-{% elif domain_zone.type == "slave" %} 
+{% elif item.type == "slave" %}
   type slave;
   masters {
-  {{ domain_zone.master }};
+  {{ item.master }};
   };
 {% endif %}
-  file "{{ zones_dir }}/db.{{ domain_zone.name }}";
-  allow-update { key "{{ dns_key_name }}"; };
+  file "{{ bind_zone_dir }}/db.{{ item.name }}";
+  allow-update { key "{{ item.name }}"; };
 };
-
-zone "{{ domain_zone.reverse }}.in-addr.arpa" {
-{% if domain_zone.type == "master" %}
-  type master;
-{% elif domain_zone.type == "slave" %}
+zone "{{ item.reverse }}.in-addr.arpa" {
+{% if item.type == "master" %}
+  type master; {% elif item.type == "slave" %}
   type slave;
   masters {
-  {{ domain_zone.master }};
+  {{ item.master }};
   };
 {% endif %}
-  file "{{ zones_dir }}/db.{{ domain_zone.reverse }}";
-  allow-update { key "{{ dns_key_name }}."; };
+  file "{{ bind_zone_dir }}/db.{{ item.reverse }}";
+  allow-update { key "{{ item.name }}"; };
 };
 {% endfor %}
