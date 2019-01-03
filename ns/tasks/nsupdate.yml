@@ -1,11 +1,11 @@
 ---
 - name: Add or modify ansible.example.org A to 192.168.1.1"
   nsupdate:
-    key_name: "mylabserver.com"
-    key_secret: "ptpTJAdNrUS3NfNDsDSGHgIml1R5LQhpTlYlqagxe0/FgN+3/rYHFR6SBYrOV1tyJPBCjw9+a19foc1R2++DMg=="
+    key_name: "{{ dns_key_name }}"
+    key_secret: "{{ dns_key_secret }}"
     server: "localhost"
     zone: "mylabserver.com"
-    record: "{{ item.name }}"
-    value: "{{ item.dest }}"
-    ttl: "{{ item.ttl }}"
-  with_items: "{{ bind_azure_auto_generated_records }}"
+    record: "demo15.mylabserver.com"
+    value: "172.31.0.115"
+    ttl: "86400"
+  tags: nsupdate

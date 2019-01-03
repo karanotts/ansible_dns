@@ -9,15 +9,9 @@ domain_zones:
       slaves: [],
       forwarders: [],
     }
-  - {
-      name: "myfakeserver.com",
-      networks: "172.32",
-      reverse: "32.172",
-      type: "slave",
-      master: "172.31.0.1",
-      forwarders: [],
-    }
+trusted_hosts: "{{ whitelisted }}"
 
+bind_zone_dir: "/etc/bind/zones/"
 bind_zone_ttl: "604800"
 bind_zone_refresh: "604800"
 bind_zone_retry: "86400"

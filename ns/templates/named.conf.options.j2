@@ -1,5 +1,7 @@
 acl "trusted" {
-  localhost;
+  {% for host in trusted_hosts %}
+  {{ host.ip }};
+  {% endfor %}
 };
 
 options {
@@ -19,12 +21,14 @@ options {
 
         #; listen-on { 10.128.10.11; }; 
 
-        allow-transfer { none; }; 
+        allow-transfer { trusted; }; 
 
         forwarders {
                 8.8.8.8;
                 8.8.4.4;
         };
+
+        rate-limit { responses-per-second 5; };
 
         //========================================================================
         // If BIND logs error messages about the root key being expired,

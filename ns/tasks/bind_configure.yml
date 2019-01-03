@@ -1,6 +1,6 @@
 - name: Create zones dir
   file:
-    path: "{{ zones_dir }}"
+    path: "{{ bind_zone_dir }}"
     state: directory
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"

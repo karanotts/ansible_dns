@@ -5,11 +5,18 @@
   connection: ssh
   vars:
     bind_azure_auto_generated_records:
-      - {name: 'betaDemo01', ttl: 300, type: 'A', dest: '172.31.111'}
+      - {name: 'betaDemo01.mylabserver.com', ttl: 300, type: 'A', dest: '172.31.111'}
       - {name: 'betaDemo02', ttl: 300, type: 'A', dest: '172.31.112'}
       - {name: 'betaDemo03', ttl: 300, type: 'A', dest: '172.31.113'}
       - {name: 'betaDemo04', ttl: 300, type: 'A', dest: '172.31.114'}
       - {name: 'betaDemo05', ttl: 300, type: 'A', dest: '172.31.115'}
+    whitelisted:
+      - {name: 'localhost', ip: '127.0.0.1'}
+      - {name: 'andynottingham2c', ip: '172.31.23.205'}
+    
+    dns_key_name: "mylabserver.com"
+    dns_key_secret: "0fzPBtSEHUKB6HbzZqCTl26at2NaPEjMfzsDROQGp+xR7FHrVmoseZVDNNm8CQrQ4D0CUNMI0PxVYrWglCECaw=="
+
   pre_tasks:
   - name: Play start
     raw: date > /home/ansible/startnsrole.log
