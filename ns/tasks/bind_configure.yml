@@ -17,6 +17,15 @@
 - name: Create DNSSEC keys
   import_tasks: "bind_dnskeys.yml"
 
+- name: Modify named.conf
+  template:
+    src: named.conf.j2
+    dest: "{{ bind_dir }}/named.conf"
+    owner: "{{ bind_owner }}"
+    group: "{{ bind_group }}"
+    mode: 0644
+  notify: restart bind9
+
 - name: Modify named.conf.options file
   template:
     src: named.conf.options.j2
