@@ -14,6 +14,17 @@
     group: "{{ bind_group }}"
     mode: 0755
 
+- name: Create logs dir
+  file:
+    path: "{{ bind_log_dir }}"
+    state: directory
+    owner: "{{ bind_owner }}"
+    group: "{{ bind_group }}"
+    mode: 0755
+
+- name: Allow bind to write to zones dir
+  import_tasks: "bind_apparmor.yml"
+
 - name: Create DNSSEC keys
   import_tasks: "bind_dnskeys.yml"
 
@@ -21,6 +32,15 @@
   template:
     src: named.conf.j2
     dest: "{{ bind_dir }}/named.conf"
+    owner: "{{ bind_owner }}"
+    group: "{{ bind_group }}"
+    mode: 0644
+  notify: restart bind9
+
+- name: Set up logging
+  template:
+    src: named.conf.log.j2
+    dest: "{{ bind_dir }}/named.conf.log"
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"
     mode: 0644
@@ -53,5 +73,3 @@
   become: yes
   notify: restart bind9
 
-- name: Allow bind to write to zones dir
-  import_tasks: "bind_apparmor.yml"

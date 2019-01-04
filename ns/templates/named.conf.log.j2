@@ -1,0 +1,16 @@
+logging {
+  channel bind.log {
+    file "{{ bind_log_dir }}/bind.log" versions 3 size 5m;
+    severity debug 3;
+    print-category yes;
+    print-severity yes;
+    print-time yes;
+  };
+  category default { bind.log; };
+  category update { bind.log; };
+  category update-security { bind.log; };
+  category security { bind.log; };
+  category queries { bind.log; };
+  category lame-servers { null; };
+};
+

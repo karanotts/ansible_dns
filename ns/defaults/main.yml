@@ -2,6 +2,7 @@
 
 bind_trusted_hosts: "{{ whitelisted }}"
 bind_zone_dir: "/etc/bind/zones/"
+bind_log_dir: "/var/log/bind"
 bind_zone_ttl: "604800"
 bind_zone_refresh: "604800"
 bind_zone_retry: "86400"

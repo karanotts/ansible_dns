@@ -12,4 +12,4 @@ include "/etc/bind/named.conf.default-zones";
 {% for zone in bind_domain_zones %}
 include "/etc/bind/named.conf.options.keys.{{ zone.name }}";
 {% endfor %}
-
+include "/etc/bind/named.conf.log";

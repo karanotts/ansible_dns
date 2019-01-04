@@ -1,7 +1,7 @@
 ---
 - name: Delete DNSSEC keys dirs if exist
   file:
-    path: "{{ bind_zone_dir }}/keys/"
+    path: "{{ bind_zone_dir }}/keys/*"
     state: absent
 
 - name: Create DNSSEC keys dirs
@@ -26,6 +26,8 @@
   register: "raw"
   with_list: "{{ bind_domain_zones }}"
   tags: dns
+- set_fact: dns_key_secret="{{ raw.results }}"
+- debug: msg="Show what's in {{dns_key_secret}}"
 
 - name: Write key secret to conf.options.keys
   template:
@@ -33,5 +35,5 @@
     dest: "{{ bind_dir }}/named.conf.options.keys.{{ item.item.name }}"
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"
-    mode: 0755
+    mode: 0600
   with_items: "{{ raw.results }}"

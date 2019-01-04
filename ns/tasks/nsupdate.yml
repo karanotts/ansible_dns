@@ -8,4 +8,5 @@
     record: "demo15.mylabserver.com"
     value: "172.31.0.115"
     ttl: "86400"
+- debug: msg="{{ dns_key_secret }}"
   tags: nsupdate
