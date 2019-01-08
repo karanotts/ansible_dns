@@ -8,18 +8,20 @@ zone {{ item.name }} {
 {% elif item.type == "slave" %}
   type slave;
   masters {
-  {{ item.master }};
+   ;
   };
 {% endif %}
   file "{{ bind_zone_dir }}/db.{{ item.name }}";
   allow-update { key "{{ item.name }}"; };
 };
+
 zone "{{ item.reverse }}.in-addr.arpa" {
 {% if item.type == "master" %}
-  type master; {% elif item.type == "slave" %}
+  type master; 
+{% elif item.type == "slave" %}
   type slave;
   masters {
-  {{ item.master }};
+   ;
   };
 {% endif %}
   file "{{ bind_zone_dir }}/db.{{ item.reverse }}";

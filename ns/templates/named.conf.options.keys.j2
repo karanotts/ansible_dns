@@ -1,8 +1,4 @@
-{% for zone in bind_domain_zones %}
-
-key "{{ zone.name }}" {
-   algorithm hmac-md5;
-	 secret "{{ item.stdout }}";
+key "{{ item.item.name }}" {
+ algorithm hmac-md5;
+ secret "{{ item.stdout }}";
 };
-
-{% endfor %}

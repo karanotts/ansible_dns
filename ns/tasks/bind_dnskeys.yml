@@ -1,12 +1,12 @@
 ---
 - name: Delete DNSSEC keys dirs if exist
   file:
-    path: "{{ bind_zone_dir }}/keys/*"
+    path: "{{ bind_dir }}/keys"
     state: absent
 
 - name: Create DNSSEC keys dirs
   file:
-    path: "{{ bind_zone_dir }}/keys/{{ item.name }}"
+    path: "{{ bind_dir }}/keys/{{ item.name }}"
     state: directory
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"
@@ -17,12 +17,12 @@
 - name: Create DNSSEC keys
   command: "dnssec-keygen -r /dev/urandom -a HMAC-MD5 -b 512 -n HOST {{ item.name }}"
   args:
-    chdir: "{{ bind_zone_dir }}/keys/{{ item.name }}"
+    chdir: "{{ bind_dir }}/keys/{{ item.name }}"
   with_list: "{{ bind_domain_zones }}"
   tags: dns
 
 - name: Get DNSSEC key value
-  raw: "grep Key {{ bind_zone_dir}}keys/{{ item.name}}/K{{ item.name }}.*.private | awk '{print $2}'"
+  raw: "grep Key {{ bind_dir }}/keys/{{ item.name }}/K{{ item.name }}.*.private | awk '{print $2}'"
   register: "raw"
   with_list: "{{ bind_domain_zones }}"
   tags: dns
@@ -32,7 +32,7 @@
 - name: Write key secret to conf.options.keys
   template:
     src: "named.conf.options.keys.j2"
-    dest: "{{ bind_dir }}/named.conf.options.keys.{{ item.item.name }}"
+    dest: "{{ bind_dir }}/keys/named.conf.keys.{{ item.item.name }}"
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"
     mode: 0600

@@ -1,21 +1,15 @@
 --- # MASTER FOR NS
-- hosts: ns
+- hosts: ns-all
   user: ansible
   become: true
   connection: ssh
   vars:
-    bind_azure_auto_generated_records:
-      - {name: 'betaDemo01.mylabserver.com', ttl: 300, type: 'A', dest: '172.31.111'}
-      - {name: 'betaDemo02', ttl: 300, type: 'A', dest: '172.31.112'}
-      - {name: 'betaDemo03', ttl: 300, type: 'A', dest: '172.31.113'}
-      - {name: 'betaDemo04', ttl: 300, type: 'A', dest: '172.31.114'}
-      - {name: 'betaDemo05', ttl: 300, type: 'A', dest: '172.31.115'}
     whitelisted:
       - {name: 'localhost', ip: '127.0.0.1'}
       - {name: 'andynottingham2c', ip: '172.31.23.205'}
-    bind_domain_zones:
-      - {name: 'mylabserver.com', networks: '172.31', reverse: '31.172', type: 'master', slaves: [], forwarders: []}
-    dns_key_name: "mylabserver.com"
+  vars_files:
+    - ns/vars/other.yml
+    - ns/vars/bind_all_records.yml
   tasks:
     - debug: var="bind_dns_key_secret"
 

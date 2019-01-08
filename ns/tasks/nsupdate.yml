@@ -1,4 +1,8 @@
 ---
+- name: Get key values
+  raw: grep key /etc/bind/keys/named.conf.keys.myfakeserver.com | awk '{ print $2 }'
+
+
 - name: Add or modify ansible.example.org A to 192.168.1.1"
   nsupdate:
     key_name: "{{ dns_key_name }}"

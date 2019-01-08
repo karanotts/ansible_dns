@@ -1,0 +1,5 @@
+bind_all_records:
+  - {name: 'andynottingham1c', ttl: 300, type: 'A', dest: '172.31.110.166'}
+  - {name: 'andynottingham2c', ttl: 300, type: 'A', dest: '172.31.110.166'}
+  - {name: 'andynottingham3c', ttl: 300, type: 'A', dest: '172.31.110.166'}
+
