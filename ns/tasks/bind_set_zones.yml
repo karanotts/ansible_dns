@@ -4,21 +4,27 @@
     src: fwd_zone.j2
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"
-    dest: "{{ bind_zone_dir }}/db.{{ item.name }}"
+    dest: "{{ bind_zone_dir }}/db.{{ item.0.name }}"
     mode: 0755
     validate: 'named-checkzone -d db.mylabserver.com %s'
-  with_items: "{{ bind_domain_zones }}"
+#  debug: 
+#    msg: "Domain={{ item.0.name }} Records={{ item.1.name }}"
+  with_subelements:
+    - "{{ bind_domain_zones }}"
+    - records
   tags: fwd-zone
-  notify: restart bind9
-
-- name: Create reverse zone file
-  template:
-    src: rev_zone.j2
-    owner: "{{ bind_owner }}"
-    group: "{{ bind_group }}"
-    dest: "{{ bind_zone_dir }}/db.{{ item.reverse }}"
-    mode: 0755
-    validate: 'named-checkzone -d db.172.31 %s'
-  with_items: "{{ bind_domain_zones }}"
-  tags: rev-zone
-  notify: restart bind9
+#   notify: restart bind9
+# 
+# - name: Create reverse zone file
+#   template:
+#     src: rev_zone.j2
+#     owner: "{{ bind_owner }}"
+#     group: "{{ bind_group }}"
+#     dest: "{{ bind_zone_dir }}/db.{{ item.0.reverse }}"
+#     mode: 0755
+#     validate: 'named-checkzone -d db.172.31 %s'
+#   with_subelements:
+#     - "{{ bind_domain_zones }}"
+#     - records
+#   tags: rev-zone
+#   notify: restart bind9

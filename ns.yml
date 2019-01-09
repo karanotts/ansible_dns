@@ -8,10 +8,7 @@
       - {name: 'localhost', ip: '127.0.0.1'}
       - {name: 'andynottingham2c', ip: '172.31.23.205'}
   vars_files:
-    - ns/vars/other.yml
-    - ns/vars/bind_all_records.yml
-  tasks:
-    - debug: var="bind_dns_key_secret"
+    - ns/vars/bind_domain_zones.yml
 
   pre_tasks:
   - name: Play start

@@ -1,7 +1,9 @@
+
 ; {{ ansible_managed }}
 
+{% for domain in bind_domain_zones %}
 $TTL    {{ bind_zone_ttl }}
-@       IN      SOA     mylabserver.com. root.localhost. (
+@       IN      SOA     {{ domain.name }}. root.localhost. (
       {{ bind_zone_serial }}     ; Serial
       {{ bind_zone_refresh }}    ; Refresh
       {{ bind_zone_retry }}      ; Retry
@@ -9,11 +11,12 @@ $TTL    {{ bind_zone_ttl }}
       {{ bind_zone_neg_ttl }} )  ; Negative Cache TTL
 ;
 ; name servers - NS records
-     IN      NS      andynottingham2c.mylabserver.com.
-
+{% for nameserver in domain.nameservers %}
+     IN      NS      {{ nameserver.name }}.{{ domain.name }}.
+{% endfor %}
 ; name servers - A records
-andynottingham2c.mylabserver.com.          IN      A       172.31.22.124
 
-; 172.31.0.0/16 - A records
-andynottingham3c.mylabserver.com.          IN      A       172.31.27.172
-andynottingham4c.mylabserver.com.          IN      A       172.31.29.20
+{% for nameserver in domain.nameservers %}
+{{ nameserver.name }}.{{ domain.name }}.          IN      A       {{ nameserver.ip }}
+{% endfor %}
+{% endfor %}

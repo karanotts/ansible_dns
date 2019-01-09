@@ -1,16 +1,29 @@
 ---
-- name: Get key values
-  raw: grep key /etc/bind/keys/named.conf.keys.myfakeserver.com | awk '{ print $2 }'
-
+- name: Get key name
+  raw: "grep key /etc/bind/keys/named.conf.keys.{{ item }} | awk '{ print $2 }'"
+  register: "raw_key_name"
+  with_items:
+    mylabserver.com
+- set_fact: bind_key_name="{{ item.stdout_lines }}"
+  loop: "{{ raw_key_name.results }}"
+    
+- name: Get key value
+  raw: "grep secret /etc/bind/keys/named.conf.keys.{{ item }} | awk '{ print $2 }' | sed s'/;$//'"
+  register: "raw_key_secret"
+  with_items:
+    mylabserver.com
+- set_fact: bind_key_value="{{ item.stdout_lines }}"
+  loop: "{{ raw_key_secret.results }}"
 
 - name: Add or modify ansible.example.org A to 192.168.1.1"
   nsupdate:
-    key_name: "{{ dns_key_name }}"
-    key_secret: "{{ dns_key_secret }}"
-    server: "localhost"
+    key_name: "{{ bind_key_name }}"
+    key_secret: "{{ bind_key_value }}"
+  server: "localhost"
     zone: "mylabserver.com"
     record: "demo15.mylabserver.com"
     value: "172.31.0.115"
     ttl: "86400"
-- debug: msg="{{ dns_key_secret }}"
+- debug:
+    msg: "{{ bind_key_name }} | {{ bind_key_value }}"
   tags: nsupdate

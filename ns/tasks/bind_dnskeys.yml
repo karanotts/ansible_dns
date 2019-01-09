@@ -11,23 +11,21 @@
     owner: "{{ bind_owner }}"
     group: "{{ bind_group }}"
     mode: 0755
-  with_list: "{{ bind_domain_zones }}"
+  loop: "{{ bind_domain_zones }}"
   tags: dns
 
 - name: Create DNSSEC keys
   command: "dnssec-keygen -r /dev/urandom -a HMAC-MD5 -b 512 -n HOST {{ item.name }}"
   args:
     chdir: "{{ bind_dir }}/keys/{{ item.name }}"
-  with_list: "{{ bind_domain_zones }}"
+  loop: "{{ bind_domain_zones }}"
   tags: dns
 
 - name: Get DNSSEC key value
   raw: "grep Key {{ bind_dir }}/keys/{{ item.name }}/K{{ item.name }}.*.private | awk '{print $2}'"
   register: "raw"
-  with_list: "{{ bind_domain_zones }}"
+  loop: "{{ bind_domain_zones }}"
   tags: dns
-- set_fact: dns_key_secret="{{ raw.results }}"
-- debug: msg="Show what's in {{dns_key_secret}}"
 
 - name: Write key secret to conf.options.keys
   template:

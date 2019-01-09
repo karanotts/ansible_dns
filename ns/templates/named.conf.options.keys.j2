@@ -1,4 +1,4 @@
 key "{{ item.item.name }}" {
  algorithm hmac-md5;
- secret "{{ item.stdout }}";
+ secret "{{ item.stdout | trim }}";
 };

@@ -8,7 +8,6 @@ zone {{ item.name }} {
 {% elif item.type == "slave" %}
   type slave;
   masters {
-   ;
   };
 {% endif %}
   file "{{ bind_zone_dir }}/db.{{ item.name }}";
@@ -21,7 +20,6 @@ zone "{{ item.reverse }}.in-addr.arpa" {
 {% elif item.type == "slave" %}
   type slave;
   masters {
-   ;
   };
 {% endif %}
   file "{{ bind_zone_dir }}/db.{{ item.reverse }}";

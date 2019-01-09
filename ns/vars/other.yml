@@ -1,4 +1,3 @@
 ---
 bind_domain_zones:
   - { name: 'mylabserver.com', network: '172.31', reverse: '31.172', type: 'master', records: "{{ bind_all_records }}"}
-  - { name: 'myfakeserver.com', network: '10.0', reverse: '0.10', type: 'slave'}
