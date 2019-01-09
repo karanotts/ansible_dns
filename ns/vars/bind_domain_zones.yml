@@ -1,0 +1,16 @@
+bind_domain_zones:
+  - name: mylabserver.com
+    network: 172.31
+    reverse: 31.172
+    type: master
+    nameservers:
+      - {name: 'andynottingham1c', ip: '172.31.110.166'}
+      - {name: 'andynottingham1d', ip: '172.31.110.166'}
+    records:
+      - {name: 'andynottingham1c', ttl: 300, type: 'A', dest: '172.31.110.166'}
+      - {name: 'andynottingham1d', ttl: 300, type: 'A', dest: '172.31.110.166'}
+      - {name: 'andynottingham2c', ttl: 300, type: 'A', dest: '172.31.105.99'}
+      - {name: 'andynottingham2d', ttl: 300, type: 'A', dest: '172.31.105.99'}
+      - {name: 'andynottingham3c', ttl: 300, type: 'A', dest: '172.31.103.145'}
+      - {name: 'andynottingham3d', ttl: 300, type: 'A', dest: '172.31.103.145'}
+
